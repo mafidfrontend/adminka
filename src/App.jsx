@@ -8,9 +8,14 @@ import LoginPage from "./pages/LoginPage";
 
 function App() {
     const [collapsed, setCollapsed] = useState(false);
+    const [loginPage, setLoginPage] = useState(true);
     return (
         <div className="h-screen bg-gray-100">
-            <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
+            {loginPage ? (
+                <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
+            ) : (
+                <LoginPage />
+            )}
             <Routes>
                 <Route path="/" element={<HomePage collapsed={collapsed} />} />
                 <Route
@@ -21,7 +26,6 @@ function App() {
                     path="/categories"
                     element={<Categories collapsed={collapsed} />}
                 />
-                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </div>
     );

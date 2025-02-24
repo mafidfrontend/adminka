@@ -1,7 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
-import { Link } from "react-router-dom";
 
 function Navbar({ setCollapsed, collapsed }) {
     return (
@@ -20,7 +19,7 @@ function Navbar({ setCollapsed, collapsed }) {
                 </Button>
                 <p>Logo</p>
             </div>
-            <Link to={'/login'}>Login</Link>
+            <p>Avatar</p>
         </nav>
     );
 }
