@@ -1,8 +1,17 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
-const useMyStore = create(() => ({
-    token: "",
-    user: {}
-}))
+const useAuthStore = create(() => {
+    return {
+        token: "",
+        user: null,
+    };
+});
 
-export default useMyStore
+const useLoginStore = create(() => {
+    return {
+        username: "",
+        password: "",
+    }
+})
+
+export default useAuthStore;

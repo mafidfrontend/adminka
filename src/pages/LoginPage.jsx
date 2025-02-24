@@ -2,12 +2,10 @@ import { Button, Card, Form, message } from "antd";
 import Input from "antd/es/input/Input";
 import axios from "axios";
 import { useState } from "react";
+import useAuthStore from "../myStore";
 
 function LoginPage() {
-    const [login, setLogin] = useState({
-        username: "",
-        password: "",
-    });
+    const stateAuth = useAuthStore();
     const [loading, setLoading] = useState(false);
     return (
         <>
@@ -22,9 +20,13 @@ function LoginPage() {
                                     values
                                 )
                                 .then((res) => {
-                                    console.log(res.data.user);
-                                    setLogin(...login)
+                                    console.log(res.data);
+                                    useAuthStore.setState({
+                                        token: res.data.token,
+                                        user: res.data.user,
+                                    });
                                     setLoading(false);
+                                    message.success("Success");
                                 });
                         }}
                     >
