@@ -21,7 +21,7 @@ function LoginPage() {
                                 )
                                 .then((res) => {
                                     console.log(res.data);
-                                    useAuthStore.setState({
+                                    stateAuth.setAuth({
                                         token: res.data.token,
                                         user: res.data.user,
                                     });

@@ -16,26 +16,31 @@ function App() {
         if (stateAuth.token) {
             setLoginPage(true);
         }
-    }, []);
+    }, [stateAuth.token]);
 
     return (
         <div className="h-screen bg-gray-100">
-            {loginPage ? (
+            {loginPage && (
                 <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
+            )}
+            {loginPage ? (
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<HomePage collapsed={collapsed} />}
+                    />
+                    <Route
+                        path="/products"
+                        element={<ProductPage collapsed={collapsed} />}
+                    />
+                    <Route
+                        path="/categories"
+                        element={<Categories collapsed={collapsed} />}
+                    />
+                </Routes>
             ) : (
                 <LoginPage />
             )}
-            <Routes>
-                <Route path="/" element={<HomePage collapsed={collapsed} />} />
-                <Route
-                    path="/products"
-                    element={<ProductPage collapsed={collapsed} />}
-                />
-                <Route
-                    path="/categories"
-                    element={<Categories collapsed={collapsed} />}
-                />
-            </Routes>
         </div>
     );
 }
