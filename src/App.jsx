@@ -16,7 +16,7 @@ function App() {
         if (stateAuth.token) {
             setLoginPage(true);
         }
-    }, [stateAuth.token]);
+    }, []);
 
     return (
         <div className="h-screen bg-gray-100">

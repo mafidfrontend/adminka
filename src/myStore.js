@@ -7,11 +7,4 @@ const useAuthStore = create(() => {
     };
 });
 
-const useLoginStore = create(() => {
-    return {
-        username: "",
-        password: "",
-    }
-})
-
 export default useAuthStore;
