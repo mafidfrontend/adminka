@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const useAuthStore = create((set) => ({
     token: "",
-    user: null,
+    user: undefined,
     setAuth: (data) => set(data),
 }));
 
