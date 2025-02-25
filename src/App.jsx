@@ -20,27 +20,23 @@ function App() {
 
     return (
         <div className="h-screen bg-gray-100">
-            {loginPage && (
-                <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
-            )}
             {loginPage ? (
-                <Routes>
-                    <Route
-                        path="/"
-                        element={<HomePage collapsed={collapsed} />}
-                    />
-                    <Route
-                        path="/products"
-                        element={<ProductPage collapsed={collapsed} />}
-                    />
-                    <Route
-                        path="/categories"
-                        element={<Categories collapsed={collapsed} />}
-                    />
-                </Routes>
+                <Navbar collapsed={collapsed} setCollapsed={setCollapsed} />
             ) : (
                 <LoginPage />
             )}
+
+            <Routes>
+                <Route path="/" element={<HomePage collapsed={collapsed} />} />
+                <Route
+                    path="/products"
+                    element={<ProductPage collapsed={collapsed} />}
+                />
+                <Route
+                    path="/categories"
+                    element={<Categories collapsed={collapsed} />}
+                />
+            </Routes>
         </div>
     );
 }
