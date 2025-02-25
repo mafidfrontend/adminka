@@ -1,10 +1,11 @@
-import Sidebar from "../components/Sidebar";
-
-function HomePage({ collapsed }) {
+function HomePage() {
     return (
-        <div className="flex h-full">
-            <Sidebar collapsed={collapsed} />
-            <main className="bg-slate-200 h-full w-full p-10">Home Page</main>
+        <div className="bg-gray-100">
+            <div className="flex flex-col w-full h-full">
+                <main className=" p-6 shadow-md m-4 rounded-lg">
+                    <h1 className="text-3xl font-bold">Home Page</h1>
+                </main>
+            </div>
         </div>
     );
 }

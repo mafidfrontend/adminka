@@ -8,7 +8,7 @@ function LoginPage() {
     const [loading, setLoading] = useState(false);
     return (
         <>
-            <div className="flex items-center justify-center h-full">
+            <div className="flex items-center justify-center h-screen w-full">
                 <Card className="shadow-lg w-96 shadow-black">
                     <Form
                         onFinish={(values) => {
@@ -19,12 +19,12 @@ function LoginPage() {
                                     values
                                 )
                                 .then((res) => {
-                                    console.log(res.data);
                                     stateAuth.setAuth({
                                         token: res.data.token,
                                         user: res.data.user,
                                     });
                                     setLoading(false);
+                                    localStorage.setItem("auth", JSON.stringify(res.data))
                                     message.success("Success");
                                 });
                         }}

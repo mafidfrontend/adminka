@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import { Table } from "antd";
+import { Spin, Table } from "antd";
 import axios from "axios";
+import { LoadingOutlined } from "@ant-design/icons";
 
-function Categories({ collapsed }) {
+function Categories() {
     const [products, setProducts] = useState();
     useEffect(() => {
         axios
@@ -13,11 +13,10 @@ function Categories({ collapsed }) {
             });
     }, []);
     if (!products) {
-        return <div>loading ...</div>;
+        return <div className="flex justify-center h-full items-center w-full"><Spin indicator={<LoadingOutlined spin />} size="large" /></div>;
     }
     return (
-        <div className="flex h-full">
-            <Sidebar collapsed={collapsed} />
+        <div className="flex h-full w-full">
             <main className="bg-slate-200 h-full w-full p-10">
                 <div className="text-2xl font-bold mb-2">Category Page</div>
                 <Table
