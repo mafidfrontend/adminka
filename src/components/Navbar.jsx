@@ -15,7 +15,7 @@ function Navbar({ setCollapsed, collapsed }) {
             <p>{stateAuth.user?.username || "User"}</p>
             <Button
                 onClick={() => {
-                    stateAuth.token = "";
+                    stateAuth.logout()
                 }}
             >
                 Ortga

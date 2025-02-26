@@ -34,7 +34,7 @@ function Sidebar({ collapsed }) {
                 },
                 {
                     key: "/categories",
-                    label: "Kategoriyalar",
+                    label: "Ijara",
                     icon: <FolderAddOutlined />,
                     onClick: () => {
                         navigate("/categories")
