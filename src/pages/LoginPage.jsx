@@ -32,6 +32,7 @@ function LoginPage() {
                         <Form.Item
                             label="Login"
                             name="username"
+                            layout="vertical"
                             rules={[
                                 {
                                     required: true,
@@ -48,6 +49,7 @@ function LoginPage() {
 
                         <Form.Item
                             label="Password"
+                            layout="vertical"
                             name="password"
                             rules={[
                                 {

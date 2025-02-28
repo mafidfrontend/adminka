@@ -40,6 +40,14 @@ function Sidebar({ collapsed }) {
                         navigate("/categories")
                     }
                 },
+                {
+                    key: "/users",
+                    label: "Kitobxonlar",
+                    icon: <FolderAddOutlined />,
+                    onClick: () => {
+                        navigate("/users")
+                    }
+                },
             ]}
         />
     );

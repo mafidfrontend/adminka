@@ -4,9 +4,10 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
-import Categories from "./pages/Categories";
+import Categories from "./pages/RentPage";
 import LoginPage from "./pages/LoginPage";
 import useAuthStore from "./myStore";
+import UsersPage from "./pages/UsersPage";
 
 function App() {
     const [collapsed, setCollapsed] = useState(false);
@@ -33,6 +34,7 @@ function App() {
                                     path="/categories"
                                     element={<Categories />}
                                 />
+                                <Route path="/users" element={<UsersPage />} />
                             </Routes>
                         </main>
                     </div>
