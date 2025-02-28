@@ -1,6 +1,10 @@
 import { Button } from "antd";
 import useAuthStore from "../myStore";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
 
 function Navbar({ setCollapsed, collapsed }) {
     const stateAuth = useAuthStore();
@@ -12,10 +16,13 @@ function Navbar({ setCollapsed, collapsed }) {
                 </Button>
                 <p className="text-lg font-semibold">Logo</p>
             </div>
-            <p>{stateAuth.user?.username || "User"}</p>
+            <p>
+                <UserOutlined />
+                Kitobxon: {stateAuth.user?.username || "User"}
+            </p>
             <Button
                 onClick={() => {
-                    stateAuth.logout()
+                    stateAuth.logout();
                 }}
             >
                 Ortga

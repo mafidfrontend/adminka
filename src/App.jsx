@@ -8,6 +8,7 @@ import Categories from "./pages/RentPage";
 import LoginPage from "./pages/LoginPage";
 import useAuthStore from "./myStore";
 import UsersPage from "./pages/UsersPage";
+import MyBooks from "./pages/MyBooks";
 
 function App() {
     const [collapsed, setCollapsed] = useState(false);
@@ -35,6 +36,7 @@ function App() {
                                     element={<Categories />}
                                 />
                                 <Route path="/users" element={<UsersPage />} />
+                                <Route path="/mybooks" element={<MyBooks />} />
                             </Routes>
                         </main>
                     </div>
