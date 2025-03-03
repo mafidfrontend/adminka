@@ -7,21 +7,18 @@ import api from "../api/fetch";
 function Categories() {
     const [ijara, setIjara] = useState();
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [selectedIjara, setSelectedIjara] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10;
+
     useEffect(() => {
-        api
-            .get("/api/rents", {
-                params: {
-                    size: pageSize,
-                    page: currentPage,
-                }
-            })
-            .then((response) => {
-                console.log(response.data.items)
-                setIjara(response.data);
-            });
+        api.get("/api/rents", {
+            params: { size: pageSize, page: currentPage },
+        }).then((response) => {
+            setIjara(response.data);
+        });
     }, [currentPage]);
+
     if (!ijara) {
         return (
             <div className="flex justify-center h-full items-center w-full">
@@ -29,63 +26,77 @@ function Categories() {
             </div>
         );
     }
+
     return (
         <div className="flex h-full w-full">
             <main className="bg-slate-200 h-full w-full p-10">
                 <div className="text-2xl font-bold mb-2 flex justify-between">
                     <p>Ijara Page</p>
                     <Button
-                        onClick={() => {
-                            setDrawerOpen(true);
-                        }}
+                        onClick={() => setDrawerOpen(true)}
                         size="large"
                         type="primary"
                     >
                         + Qo'shish
                     </Button>
                 </div>
-                <RentPageDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} ijara={ijara} />
+
+                <RentPageDrawer
+                    drawerOpen={drawerOpen}
+                    setDrawerOpen={setDrawerOpen}
+                    selectedIjara={selectedIjara}
+                />
+
                 <Table
                     columns={[
                         {
                             key: "id",
                             title: "ID",
                             dataIndex: "id",
+                            render: (text, record) => (
+                                <Button
+                                    type="link"
+                                    onClick={() => {
+                                        setSelectedIjara(record);
+                                        setDrawerOpen(true);
+                                    }}
+                                >
+                                    {text}
+                                </Button>
+                            ),
                         },
                         {
                             key: "leasedAt",
-                            title: "berilgan sana",
+                            title: "Berilgan sana",
                             dataIndex: "leasedAt",
-                            render: (value) => {
-                                return new Date(value).toLocaleString("ru");
-                            },
+                            render: (value) =>
+                                new Date(value).toLocaleString("ru"),
                         },
                         {
                             title: "Qaytarilgan sana",
                             dataIndex: "returningDate",
-                            render: (value) => {
-                                return new Date(value).toLocaleString("ru");
-                            },
+                            render: (value) =>
+                                new Date(value).toLocaleString("ru"),
                         },
                         {
                             title: "Qaytarilgan",
                             dataIndex: "returnedAt",
-                            render: (checked) => {
-                                return (
-                                    <Switch checked={checked ? true : false} />
-                                );
-                            },
+                            render: (checked) => <Switch checked={!!checked} />,
                         },
                         {
                             title: "Kutubxonachi",
                             dataIndex: "user",
-                            render: (user) => {
-                                return (
-                                    <div>
-                                        {user.id}. {user.firstName}
-                                    </div>
-                                );
-                            },
+                            render: (user, record) => (
+                                <Button
+                                    type="link"
+                                    onClick={() => {
+                                        setSelectedIjara(record);
+                                        setDrawerOpen(true);
+                                    }}
+                                >
+                                    {user.id}. {user.firstName}
+                                </Button>
+                            ),
                         },
                     ]}
                     dataSource={ijara.items}
@@ -93,9 +104,7 @@ function Categories() {
                         pageSize: pageSize,
                         current: currentPage,
                         total: ijara.totalCount,
-                    }}
-                    onChange={(pagination) => {
-                        setCurrentPage(pagination);
+                        onChange: (page) => setCurrentPage(page),
                     }}
                 />
             </main>
