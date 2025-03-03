@@ -18,6 +18,7 @@ function Categories() {
                 }
             })
             .then((response) => {
+                console.log(response.data.items)
                 setIjara(response.data);
             });
     }, [currentPage]);
