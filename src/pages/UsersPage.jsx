@@ -1,37 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {
-    Button,
-    Drawer,
-    Form,
-    Input,
-    message,
-    Radio,
-    Spin,
-    Table,
-} from "antd";
-import axios from "axios";
+import { Button, Spin, Table } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import api from "../api/fetch";
+import UsersDrawer from "../components/UsersDrawer";
 
 function UsersPage() {
     const [kitobxon, setKitobxon] = useState();
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const token = JSON.parse(localStorage.getItem("auth"));
-    const [currentPage, setCurrentPage] = useState(1)
-    const pageSize = 10
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10;
     useEffect(() => {
-        axios
-            .get("https://library.softly.uz/api/users", {
-                params: {
-                    size: pageSize,
-                    page: currentPage,
-                },
-                headers: {
-                    Authorization: `Bearer ${token.token}`,
-                },
-            })
-            .then((response) => {
-                setKitobxon(response.data);
-            });
+        api.get("/api/users", {
+            params: {
+                size: pageSize,
+                page: currentPage,
+            },
+        }).then((response) => {
+            setKitobxon(response.data);
+        });
     }, [kitobxon, currentPage]);
     if (!kitobxon) {
         return (
@@ -55,100 +41,7 @@ function UsersPage() {
                         + Qo'shish
                     </Button>
                 </div>
-                <Drawer
-                    width={600}
-                    destroyOnClose
-                    title="Kitobxon Qo'shish"
-                    closeIcon={null}
-                    onClose={() => {
-                        setDrawerOpen(false);
-                    }}
-                    open={drawerOpen}
-                >
-                    <Form
-                        layout="vertical"
-                        onFinish={(values) => {
-                            axios
-                                .post(
-                                    "https://library.softly.uz/api/users",
-                                    {
-                                        ...values,
-                                        phone: values.phone.toString(),
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: `Bearer ${token.token}`,
-                                        },
-                                    }
-                                )
-                                .then(() => {
-                                    setDrawerOpen(false);
-                                    message.success("Qo'shildi");
-                                });
-                        }}
-                    >
-                        <Form.Item
-                            label="Ism"
-                            name="firstName"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Familiya"
-                            name="lastName"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Telefon Raqam"
-                            name="phone"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item label="Jinsi" required={true}>
-                            <Radio.Group
-                                options={[
-                                    {
-                                        label: "Erkak",
-                                        value: "male",
-                                    },
-                                    {
-                                        label: "Ayol",
-                                        value: "female",
-                                    },
-                                ]}
-                                optionType="button"
-                                buttonStyle="solid"
-                                block
-                            />
-                        </Form.Item>
-                        <Form.Item>
-                            <Button
-                                block
-                                type="primary"
-                                htmlType="submit"
-                                className="mt-10"
-                            >
-                                Yuborish
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Drawer>
+                <UsersDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
                 <Table
                     columns={[
                         {
@@ -198,10 +91,10 @@ function UsersPage() {
                     pagination={{
                         pageSize: pageSize,
                         current: currentPage,
-                        total: kitobxon.totalCount
+                        total: kitobxon.totalCount,
                     }}
                     onChange={(pagination) => {
-                        setCurrentPage(pagination.current)
+                        setCurrentPage(pagination.current);
                     }}
                 />
             </main>

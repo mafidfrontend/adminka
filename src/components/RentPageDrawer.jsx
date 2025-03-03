@@ -1,16 +1,15 @@
 import { Drawer, Form, Input, message, Button, Select, Flex } from "antd";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import api from "../api/fetch";
 
 function RentPageDrawer({ drawerOpen, setDrawerOpen, ijara }) {
-    const token = JSON.parse(localStorage.getItem("auth"));
-    const [users, setUsers] = useState()
+    const [users, setUsers] = useState();
     useEffect(() => {
-        axios.get("https://library.softly.uz/api/users").then((res) => {
-            setUsers(res.data.items)
-        })
-    },[])
-    if(!users) {
+        api.get("/api/users").then((res) => {
+            setUsers(res.data.items);
+        });
+    }, []);
+    if (!users) {
         return <></>;
     }
     const options = users.map((item) => {
@@ -34,17 +33,8 @@ function RentPageDrawer({ drawerOpen, setDrawerOpen, ijara }) {
             <Form
                 layout="vertical"
                 onFinish={(values) => {
-                    console.log(values);
-                    axios
-                        .post(
-                            "https://library.softly.uz/api/rents",
-                            ...values,
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${token.token}`,
-                                },
-                            }
-                        )
+                    api
+                        .post("/api/rents", ...values)
                         .then(() => {
                             setDrawerOpen(false);
                             message.success("Qo'shildi");

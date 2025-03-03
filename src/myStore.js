@@ -1,7 +1,10 @@
 import { create } from "zustand";
+import api from "./api/fetch";
 
 const useAuthStore = create((set) => {
     const local = JSON.parse(localStorage.getItem("auth")) || {};
+
+    api.defaults.headers.Authorization = `Bearer ${local.token}`
 
     return {
         token: local.token || null,

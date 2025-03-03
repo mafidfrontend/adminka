@@ -1,9 +1,8 @@
 import React from "react";
 import { Button, Drawer, Form, message, Select } from "antd";
-import axios from "axios";
+import api from "../api/fetch";
 
 function AddStocksDrawer({ drawerOpen, setDrawerOpen, kitobxon }) {
-    const token = JSON.parse(localStorage.getItem("auth"));
     const options = kitobxon.items.map((kitob) => {
         return { ...kitob, label: kitob.book.name, value: kitob.bookId };
     });
@@ -22,12 +21,8 @@ function AddStocksDrawer({ drawerOpen, setDrawerOpen, kitobxon }) {
             <Form
                 layout="vertical"
                 onFinish={(values) => {
-                    axios
-                        .post("https://library.softly.uz/api/stocks", values, {
-                            headers: {
-                                Authorization: `Bearer ${token.token}`,
-                            },
-                        })
+                    api
+                        .post("/api/stocks", values)
                         .then(() => {
                             setDrawerOpen(false);
                             message.success("Qo'shildi");

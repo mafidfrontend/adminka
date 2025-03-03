@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Button, Spin, Switch, Table } from "antd";
-import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
 import RentPageDrawer from "../components/RentPageDrawer";
+import api from "../api/fetch";
 
 function Categories() {
     const [ijara, setIjara] = useState();
-    const token = JSON.parse(localStorage.getItem("auth"));
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 10;
     useEffect(() => {
-        axios
-            .get("https://library.softly.uz/api/rents", {
+        api
+            .get("/api/rents", {
                 params: {
                     size: pageSize,
                     page: currentPage,
-                },
-                headers: {
-                    Authorization: `Bearer ${token.token}`,
-                },
+                }
             })
             .then((response) => {
                 setIjara(response.data);

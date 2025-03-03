@@ -19,7 +19,6 @@ function LoginPage() {
                                     values
                                 )
                                 .then((res) => {
-                                    api.defaults.headers.Authorization = `Bearer ${res.data.token}`
                                     stateAuth.setAuth({
                                         token: res.data.token,
                                         user: res.data.user,
