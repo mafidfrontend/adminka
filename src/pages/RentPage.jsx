@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Drawer, Form, Input, message, Radio, Spin, Switch, Table } from "antd";
+import { Button, Spin, Switch, Table } from "antd";
 import axios from "axios";
 import { LoadingOutlined } from "@ant-design/icons";
+import RentPageDrawer from "../components/RentPageDrawer";
 
 function Categories() {
     const [ijara, setIjara] = useState();
@@ -46,93 +47,7 @@ function Categories() {
                         + Qo'shish
                     </Button>
                 </div>
-                <Drawer
-                    width={600}
-                    destroyOnClose
-                    title="Kitobxon Qo'shish"
-                    closeIcon={null}
-                    onClose={() => {
-                        setDrawerOpen(false);
-                    }}
-                    open={drawerOpen}
-                >
-                    <Form
-                        layout="vertical"
-                        onFinish={(values) => {
-                            axios
-                                .post(
-                                    "https://library.softly.uz/api/users",
-                                    {
-                                        ...values,
-                                        phone: values.phone.toString(),
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: `Bearer ${token.token}`,
-                                        },
-                                    }
-                                )
-                                .then(() => {
-                                    setDrawerOpen(false);
-                                    message.success("Qo'shildi");
-                                });
-                        }}
-                    >
-                        <Form.Item
-                            label="Kitobxon"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Kitob zaxirasi"
-                            name="firstName"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Familiya"
-                            name="lastName"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Telefon Raqam"
-                            name="phone"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item>
-                            <Button
-                                block
-                                type="primary"
-                                htmlType="submit"
-                                className="mt-10"
-                            >
-                                Yuborish
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Drawer>
+                <RentPageDrawer drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} ijara={ijara} />
                 <Table
                     columns={[
                         {

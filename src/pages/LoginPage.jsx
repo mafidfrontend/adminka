@@ -1,7 +1,7 @@
 import { Button, Card, Form, Input, message } from "antd";
-import axios from "axios";
 import { useState } from "react";
 import useAuthStore from "../myStore";
+import api from "../api/fetch";
 
 function LoginPage() {
     const stateAuth = useAuthStore();
@@ -13,12 +13,13 @@ function LoginPage() {
                     <Form
                         onFinish={(values) => {
                             setLoading(true);
-                            axios
+                            api
                                 .post(
-                                    "https://library.softly.uz/auth/signin",
+                                    "/auth/signin",
                                     values
                                 )
                                 .then((res) => {
+                                    api.defaults.headers.Authorization = `Bearer ${res.data.token}`
                                     stateAuth.setAuth({
                                         token: res.data.token,
                                         user: res.data.user,
