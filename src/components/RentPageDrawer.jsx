@@ -117,7 +117,12 @@ function RentPageDrawer({ drawerOpen, setDrawerOpen, selectedIjara }) {
                     </Form.Item>
                 </Flex>
                 <Form.Item>
-                    <Button block type="primary" htmlType="submit" className="mt-10">
+                    <Button
+                        block
+                        type="primary"
+                        htmlType="submit"
+                        className="mt-10"
+                    >
                         {selectedIjara ? "Tahrirlash" : "Yuborish"}
                     </Button>
                 </Form.Item>
