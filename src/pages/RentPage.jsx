@@ -9,17 +9,33 @@ function Categories() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedIjara, setSelectedIjara] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [books, setBooks] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
     const pageSize = 10;
 
+    const fetchData = async () => {
+        try {
+            const ijaraRes = await api.get("/api/rents", {
+                params: { size: pageSize, page: currentPage },
+            })            
+            setIjara(ijaraRes.data);
+    
+            const bookRes = await api.get("/api/books")
+            setBooks(bookRes.data.items);
+        } catch (error) {
+            console.log(error);            
+        } finally {
+            setIsLoading(false)
+        }
+
+    }
+
     useEffect(() => {
-        api.get("/api/rents", {
-            params: { size: pageSize, page: currentPage },
-        }).then((response) => {
-            setIjara(response.data);
-        });
+        fetchData()
     }, [currentPage]);
 
-    if (!ijara) {
+
+    if (isLoading) {
         return (
             <div className="flex justify-center h-full items-center w-full">
                 <Spin indicator={<LoadingOutlined spin />} size="large" />
@@ -98,6 +114,14 @@ function Categories() {
                                 </Button>
                             ),
                         },
+                        {
+                            title: "Kitob",
+                            dataIndex: "stock",
+                            render: (stock) => {
+                                const foundBook = books.find(book => book.id === stock.bookId);                                
+                                return <p>{foundBook ? foundBook.name : "Topilmadi"}</p>;
+                            }
+                        }
                     ]}
                     dataSource={ijara.items}
                     pagination={{
